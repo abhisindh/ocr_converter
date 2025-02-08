@@ -25,8 +25,8 @@ pip install pytesseract pdf2image PyMuPDF pillow tqdm
 
 ### 1. Clone the Repository
 ```
-git clone https://github.com/your-username/ocr-pdf-tool.git
-cd ocr-pdf-tool
+git clone https://github.com/abhisindh/ocr_converter
+cd ocr_converter
 ```
 
 ### 2. Install Dependencies
@@ -42,7 +42,7 @@ python your_script.py
 ## Creating an Executable (Windows)
 If you want to generate a standalone `.exe` file:
 ```
-pyinstaller --onefile --windowed --icon=your_icon.ico your_script.py
+pyinstaller --onefile --windowed --icon=icon.ico app.pyw
 ```
 The `.exe` file will be generated in the `dist` folder.
 
@@ -57,6 +57,6 @@ This project is open-source and licensed under the MIT License.
 Pull requests and contributions are welcome! Feel free to fork the repository and submit your improvements.
 
 ## Author
-[Your Name]  
-GitHub: [your-github-profile](https://github.com/your-username)
+Abhisindh Chatterjee
+GitHub: https://github.com/abhisindh
 
