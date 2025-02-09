@@ -1,3 +1,4 @@
+![LOGO](https://raw.githubusercontent.com/abhisindh/ocr_converter/refs/heads/main/icon.ico)
 # OCR PDF Tool
 
 ## Description
