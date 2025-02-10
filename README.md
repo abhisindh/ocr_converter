@@ -39,7 +39,7 @@ python app.py
 ## Creating an Executable (Windows)
 If you want to generate a standalone `.exe` file:
 ```
-pyinstaller --onefile --windowed --icon=icon.ico app.py
+pyinstaller --onefile --windowed --icon=icon.ico --name=ocr_converter app.py
 ```
 The `.exe` file will be generated in the `dist` folder.
 
