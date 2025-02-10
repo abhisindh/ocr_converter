@@ -30,20 +30,16 @@ git clone https://github.com/your-username/ocr-pdf-tool.git
 cd ocr-pdf-tool
 ```
 
-### 2. Install Dependencies
-```
-pip install -r requirements.txt
-```
 
-### 3. Run the Application
+### 2. Run the Application
 ```
-python your_script.py
+python app.py
 ```
 
 ## Creating an Executable (Windows)
 If you want to generate a standalone `.exe` file:
 ```
-pyinstaller --onefile --windowed --icon=your_icon.ico your_script.py
+pyinstaller --onefile --windowed --icon=icon.ico app.py
 ```
 The `.exe` file will be generated in the `dist` folder.
 
