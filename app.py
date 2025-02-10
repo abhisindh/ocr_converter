@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
+import customtkinter
 import pytesseract
 from pdf2image import convert_from_path, pdfinfo_from_path
 import fitz  # PyMuPDF
@@ -7,7 +8,10 @@ from PIL import Image
 import io
 from tqdm import tqdm
 import threading
+import sys
 import os
+
+
 
 ocr_thread = None
 cancel_flag = False
@@ -20,7 +24,9 @@ def ocr_pdf(input_pdf_path, output_pdf_path, dpi=150, quality=50):
         doc = fitz.open()
         progressbar['maximum'] = total_pages
         
-        for page_number in tqdm(range(1, total_pages + 1), desc="Processing pages"):
+        #for page_number in tqdm(range(1, total_pages + 1), desc="Processing pages"):# Remove tqdm from loop
+        for page_number in range(1, total_pages + 1):
+
             if cancel_flag:
                 messagebox.showinfo("Cancelled", "OCR processing was cancelled.")
                 return
@@ -44,7 +50,7 @@ def ocr_pdf(input_pdf_path, output_pdf_path, dpi=150, quality=50):
             doc.insert_pdf(ocr_pdf)
             
             progress_var.set(page_number)
-            progress_label.config(text=f"{page_number}/{total_pages} pages processed")
+            progress_label.configure(text=f"{page_number}/{total_pages} pages processed")
             progressbar.update_idletasks()
         
         doc.save(output_pdf_path, garbage=4, deflate=True)
@@ -88,29 +94,29 @@ def cancel_ocr():
     cancel_flag = True
 
 # UI setup
-root = tk.Tk()
-root.title("PDF OCR Tool")
-root.geometry("500x350")
+window = customtkinter.CTk()
+window.title("PDF OCR Tool")
+window.geometry("400x600")
+window.configure(bg="#e9a5a5")
+
+customtkinter.CTkLabel(window, text="Input", font=("Arial", 14), text_color="#fff").place(x=150, y=70)
+input_entry = customtkinter.CTkEntry(window, placeholder_text="choose the file", width=200, font=("Arial", 14))
+input_entry.place(x=100, y=110)
+customtkinter.CTkButton(window, text="Browse", command=select_input_file, width=95).place(x=150, y=150)
+
+customtkinter.CTkLabel(window, text="Output", font=("Arial", 14), text_color="#fff").place(x=150, y=220)
+output_entry = customtkinter.CTkEntry(window, placeholder_text="save as", width=195, font=("Arial", 14))
+output_entry.place(x=100, y=260)
+customtkinter.CTkButton(window, text="Browse", command=select_output_file, width=95).place(x=150, y=300)
+
+customtkinter.CTkButton(window, text="START OCR", command=start_ocr, width=100, height=50, fg_color="#44fd63").place(x=150, y=350)
 
 progress_var = tk.DoubleVar()
+progressbar = ttk.Progressbar(window, variable=progress_var, maximum=100, mode='determinate', length=350)
+progressbar.place(x=75, y=550)
+progress_label = customtkinter.CTkLabel(window, text="0/0 pages processed", font=("Arial", 12), text_color="#fff")
+progress_label.place(x=150, y=460)
 
-tk.Label(root, text="Select PDF file:").pack(pady=5)
-input_entry = tk.Entry(root, width=50)
-input_entry.pack()
-tk.Button(root, text="Browse", command=select_input_file).pack(pady=5)
+customtkinter.CTkButton(window, text="CANCEL", command=cancel_ocr, width=95, fg_color="#e12d2d").place(x=150, y=500)
 
-tk.Label(root, text="Save OCR PDF as:").pack(pady=5)
-output_entry = tk.Entry(root, width=50)
-output_entry.pack()
-tk.Button(root, text="Browse", command=select_output_file).pack(pady=5)
-
-tk.Button(root, text="Start OCR", command=start_ocr).pack(pady=10)
-tk.Button(root, text="Cancel", command=cancel_ocr).pack(pady=5)
-
-progressbar = ttk.Progressbar(root, variable=progress_var, maximum=100, mode='determinate')
-progressbar.pack(pady=10, fill='x', padx=20)
-
-progress_label = tk.Label(root, text="0/0 pages processed")
-progress_label.pack()
-
-root.mainloop()
+window.mainloop()
