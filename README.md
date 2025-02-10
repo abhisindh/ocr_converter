@@ -26,8 +26,8 @@ pip install pytesseract pdf2image PyMuPDF pillow tqdm
 
 ### 1. Clone the Repository
 ```
-git clone https://github.com/your-username/ocr-pdf-tool.git
-cd ocr-pdf-tool
+git clone https://github.com/abhisindh/ocr_converter
+cd ocr_converter
 ```
 
 
